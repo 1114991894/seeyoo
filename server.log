@@ -1,0 +1,17 @@
+H:\10.肾伴科技\肾小友\网站1.0\shenxiaoyou\node_modules\webpack-dev-server\lib\Server.js:2557
+        throw error;
+        ^
+
+Error: listen EADDRINUSE: address already in use 0.0.0.0:3015
+    at Server.setupListenHandle [as _listen2] (node:net:2008:16)
+    at listenInCluster (node:net:2065:12)
+    at node:net:2274:7
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+  code: 'EADDRINUSE',
+  errno: -4091,
+  syscall: 'listen',
+  address: '0.0.0.0',
+  port: 3015
+}
+
+Node.js v24.15.0
