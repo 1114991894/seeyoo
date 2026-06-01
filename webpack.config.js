@@ -80,15 +80,13 @@ module.exports = (env, argv) => {
         ]
       }
     },
-    plugins: [
-      new HtmlWebpackPlugin({
-        template: './index.html',
-        inject: 'body'
-      })
-      new webpack.DefinePlugin({
-        'process.env.SUPABASE_URL': JSON.stringify(process.env.SUPABASE_URL),
-        'process.env.SUPABASE_ANON_KEY': JSON.stringify(process.env.SUPABASE_ANON_KEY)
-      })
-    ]
-  };
-};
+   plugins: [
+  new HtmlWebpackPlugin({
+    template: './index.html',
+    inject: 'body'
+  }),  // ✅ 添加逗号
+  new webpack.DefinePlugin({
+    'process.env.SUPABASE_URL': JSON.stringify(process.env.SUPABASE_URL),
+    'process.env.SUPABASE_ANON_KEY': JSON.stringify(process.env.SUPABASE_ANON_KEY)
+  })
+]
