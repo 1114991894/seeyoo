@@ -51,10 +51,14 @@ export default function Login() {
       return;
     }
     try {
-      // 使用 email 派生的账号发送重置密码邮件
-      const { error } = await supabase.auth.resetPasswordForEmail(`${phone}@example.com`);
-      if (error) setError(error.message);
-      else alert('重置密码链接已发送到您绑定的邮箱（模拟手机号->邮箱转换）');
+      if (supabase) {
+        // 使用 email 派生的账号发送重置密码邮件
+        const { error } = await supabase.auth.resetPasswordForEmail(`${phone}@example.com`);
+        if (error) setError(error.message);
+        else alert('重置密码链接已发送到您绑定的邮箱（模拟手机号->邮箱转换）');
+      } else {
+        alert('密码重置功能需要配置 Supabase 环境变量');
+      }
     } catch (e: any) {
       setError(e?.message || '发送失败');
     } finally {

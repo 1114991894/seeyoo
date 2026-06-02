@@ -24,6 +24,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    if (!supabase) {
+      setIsLoading(false);
+      return;
+    }
+
     const session = supabase.auth.getSession();
 
     // 监听 auth 状态变化
@@ -67,6 +72,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const login = async (phone: string, password: string): Promise<boolean> => {
+    if (!supabase) {
+      // 模拟登录，使用 localStorage
+      const mockUser: User = {
+        id: `user_${Date.now()}`,
+        phone,
+        nickname: `肾友${phone.slice(-4)}`,
+      };
+      setUser(mockUser);
+      localStorage.setItem('shenxiaoyou_user', JSON.stringify(mockUser));
+      return true;
+    }
+
     const email = `${phone}@example.com`;
 
     // 先尝试登录，失败时再注册
@@ -94,19 +111,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const logout = async (): Promise<void> => {
-    await supabase.auth.signOut();
+    if (supabase) {
+      await supabase.auth.signOut();
+    }
     setUser(null);
     localStorage.removeItem('shenxiaoyou_user');
   };
 
   const updateProfile = async (data: Partial<User>): Promise<void> => {
     if (!user) return;
-    // 仅更新 user_metadata
-    const updates = {
-      id: user.id,
-      user_metadata: { ...data }
-    };
-    await supabase.auth.updateUser(updates as any);
+    if (supabase) {
+      // 仅更新 user_metadata
+      const updates = {
+        id: user.id,
+        user_metadata: { ...data }
+      };
+      await supabase.auth.updateUser(updates as any);
+    }
     const updated = { ...user, ...data };
     setUser(updated);
     localStorage.setItem('shenxiaoyou_user', JSON.stringify(updated));
