@@ -5,6 +5,8 @@ interface User {
   id: string;
   phone: string;
   nickname: string;
+  password?: string;
+  email?: string;
   avatar_url?: string;
   bio?: string;
 }
@@ -74,14 +76,32 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = async (phone: string, password: string): Promise<boolean> => {
     if (!supabase) {
       // 模拟登录，使用 localStorage
-      const mockUser: User = {
-        id: `user_${Date.now()}`,
-        phone,
-        nickname: `肾友${phone.slice(-4)}`,
-      };
-      setUser(mockUser);
-      localStorage.setItem('shenxiaoyou_user', JSON.stringify(mockUser));
-      return true;
+      const savedUsers = localStorage.getItem('shenxiaoyou_users');
+      let users: User[] = savedUsers ? JSON.parse(savedUsers) : [];
+      
+      const existingUser = users.find(u => u.phone === phone);
+      
+      if (existingUser) {
+        if (existingUser.password === password) {
+          setUser(existingUser);
+          localStorage.setItem('shenxiaoyou_user', JSON.stringify(existingUser));
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        const newUser: User = {
+          id: `user_${Date.now()}`,
+          phone,
+          password,
+          nickname: `肾友${phone.slice(-4)}`,
+        };
+        users.push(newUser);
+        localStorage.setItem('shenxiaoyou_users', JSON.stringify(users));
+        setUser(newUser);
+        localStorage.setItem('shenxiaoyou_user', JSON.stringify(newUser));
+        return true;
+      }
     }
 
     const email = `${phone}@example.com`;
