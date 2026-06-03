@@ -8,7 +8,10 @@ import {
   BarChart3, 
   LogOut,
   Menu,
-  X
+  X,
+  Image,
+  Heart,
+  FileText as PolicyIcon
 } from 'lucide-react';
 
 interface AdminLayoutProps {
@@ -41,6 +44,9 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     { path: '/admin/posts', label: '帖子管理', icon: FileText },
     { path: '/admin/review', label: '内容审核', icon: ShieldCheck },
     { path: '/admin/stats', label: '数据统计', icon: BarChart3 },
+    { path: '/admin/media', label: '图片库', icon: Image },
+    { path: '/admin/policy', label: '政策管理', icon: PolicyIcon },
+    { path: '/admin/health', label: '保健管理', icon: Heart },
   ];
 
   if (!admin) return null;

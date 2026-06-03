@@ -24,6 +24,9 @@ import UserManagement from './pages/admin/UserManagement';
 import PostManagement from './pages/admin/PostManagement';
 import ContentReview from './pages/admin/ContentReview';
 import Statistics from './pages/admin/Statistics';
+import MediaLibrary from './pages/admin/MediaLibrary';
+import PolicyManagement from './pages/admin/PolicyManagement';
+import HealthManagement from './pages/admin/HealthManagement';
 
 function App() {
   return (
@@ -55,6 +58,9 @@ function App() {
             <Route path="/admin/posts" element={<PostManagement />} />
             <Route path="/admin/review" element={<ContentReview />} />
             <Route path="/admin/stats" element={<Statistics />} />
+            <Route path="/admin/media" element={<MediaLibrary />} />
+            <Route path="/admin/policy" element={<PolicyManagement />} />
+            <Route path="/admin/health" element={<HealthManagement />} />
           </Routes>
         </HashRouter>
       </NotificationProvider>
